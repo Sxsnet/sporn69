@@ -17,7 +17,7 @@
         .wrapper {
             width: 100%;
             max-width: 650px;
-            margin-top: 10vh;
+            margin-top: 8vh;
         }
 
         .header-teks {
@@ -35,17 +35,14 @@
         .video-container {
             position: relative;
             width: 100%;
+            padding-bottom: 56.25%; /* Pas dengan rasio gambar landscape kamu */
             cursor: pointer;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             overflow: hidden;
-            background-color: #1a1c23;
-        }
-
-        video {
-            width: 100%;
-            display: block;
-            pointer-events: none; 
+            
+            /* TERSAMBUNG KE GAMBAR RUS.JPG KAMU */
+            background: url('rus.jpg') center/cover no-repeat;
         }
 
         .overlay {
@@ -54,39 +51,74 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.25);
+            z-index: 1;
         }
 
+        /* Tombol Play Putih Transparan Bulat Tengah */
         .play-button {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 68px;
-            height: 68px;
-            background: #ff3333;
+            width: 65px;
+            height: 65px;
+            background: rgba(255, 255, 255, 0.85);
             border-radius: 50%;
-            box-shadow: 0 4px 20px rgba(255, 51, 51, 0.4);
+            z-index: 2;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
         }
 
         .play-button:after {
             content: '';
             position: absolute;
-            left: 27px;
-            top: 20px;
+            left: 26px;
+            top: 19px;
             border-style: solid;
-            border-width: 14px 0 14px 22px;
-            border-color: transparent transparent transparent #ffffff;
+            border-width: 13px 0 13px 20px;
+            border-color: transparent transparent transparent #333333;
         }
 
-        /* --- POP-UP KONFIRMASI USIA DEWASA --- */
+        /* Kontrol Durasi Palsu di Bawah Video */
+        .fake-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 45px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            box-sizing: border-box;
+            z-index: 3;
+            font-size: 13px;
+            color: #ffffff;
+        }
+
+        .control-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .control-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            color: #ff3333;
+        }
+
+        /* --- POP-UP KONFIRMASI USIA (18+) --- */
         .age-verification-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 11, 14, 0.98); /* Menutup layar penuh */
+            background: rgba(10, 11, 14, 0.98);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -101,7 +133,7 @@
             padding: 30px;
             border-radius: 16px;
             text-align: center;
-            max-width: 400px;
+            max-width: 380px;
             width: 100%;
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
         }
@@ -123,7 +155,7 @@
             background: #ff3333;
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 14px 24px;
             font-size: 15px;
             font-weight: bold;
             border-radius: 8px;
@@ -150,17 +182,24 @@
 
     <a href="https://theoreticalassertshame.com/kinpdqmkw?key=308eaf66481cf68b5726bc4b540bb720" target="_blank">
         <div class="video-container">
-            <video preload="metadata">
-                <source src="rus.mp4#t=0.1" type="video/mp4">
-            </video>
             <div class="overlay"></div>
             <div class="play-button"></div>
+            
+            <div class="fake-controls">
+                <div class="control-left">
+                    <span>▶</span>
+                    <span>🔊</span>
+                    <span>00:00 / 01:24:15</span>
+                </div>
+                <div class="control-right">
+                    <span>HD ⛶</span>
+                </div>
+            </div>
         </div>
     </a>
 </div>
 
 <script>
-    // Fungsi JavaScript untuk menutup pop-up ketika tombol diklik
     function verifyAge() {
         document.getElementById('ageOverlay').style.display = 'none';
     }
