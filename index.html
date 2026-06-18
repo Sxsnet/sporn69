@@ -2,45 +2,59 @@
 <html>
 <head>
     <title>Watch Full Video</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
-        body {
+        html, body {
             background-color: #0d0e12;
             margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 0;
+            width: 100%;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #ffffff;
         }
 
         .wrapper {
             width: 100%;
             max-width: 500px;
-            margin-top: 5vh;
+            margin: 0 auto;
+            padding: 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .header-teks {
             display: flex;
             justify-content: space-between;
             width: 100%;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             font-weight: 700;
             font-size: 16px;
             letter-spacing: 0.5px;
         }
         .watch { color: #ffffff; }
-        .streaming { color: #ff3333; }
+        .streaming { color: #2ecc71; }
+
+        .video-link {
+            width: 100%;
+            text-decoration: none;
+            display: block;
+        }
 
         .video-container {
             position: relative;
             width: 100%;
-            padding-bottom: 100%; 
-            cursor: pointer;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             overflow: hidden;
-            background: url('rus.jpg') center/cover no-repeat;
+            background-color: #000;
+        }
+
+        .video-container img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         .overlay {
@@ -49,50 +63,37 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 1;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 2;
         }
 
-        /* --- TOMBOL PLAY DENGAN ANIMASI BERDENYUT JANTUNG --- */
         .play-button {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 65px;
-            height: 65px;
-            background: rgba(255, 255, 255, 0.85);
+            width: 70px;
+            height: 70px;
+            background: rgba(46, 204, 113, 0.95);
             border-radius: 50%;
-            z-index: 2;
-            box-shadow: 0 0 15px rgba(0,0,0,0.3);
-            
-            /* Mengaktifkan animasi berdenyut (nama animasi: denyut, durasi: 1.2 detik, berulang selamanya) */
+            z-index: 4;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
             animation: denyut 1.2s infinite ease-in-out;
         }
 
         .play-button:after {
             content: '';
             position: absolute;
-            left: 26px;
-            top: 19px;
+            left: 28px;
+            top: 20px;
             border-style: solid;
-            border-width: 13px 0 13px 20px;
-            border-color: transparent transparent transparent #333333;
+            border-width: 15px 0 15px 22px;
+            border-color: transparent transparent transparent #ffffff;
         }
 
-        /* LOGIKA ANIMASI BERDENYUT (PULSE) */
         @keyframes denyut {
-            0% {
-                transform: translate(-50%, -50%) scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.08); /* Membesar sedikit di tengah */
-                box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0); /* Efek lingkaran cahaya menyebar */
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-            }
+            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.5); }
+            50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 25px 12px rgba(46, 204, 113, 0); }
+            100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
         }
 
         .fake-controls {
@@ -100,31 +101,101 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 45px;
+            height: 40px;
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 15px;
             box-sizing: border-box;
-            z-index: 3;
+            z-index: 5;
+            font-size: 12px;
+        }
+
+        .control-left { display: flex; align-items: center; gap: 12px; }
+        .control-right { color: #2ecc71; font-weight: bold; }
+
+        .interaction-menu {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 15px 0;
             font-size: 13px;
-            color: #ffffff;
+            color: #a0a5b5;
+            border-bottom: 1px solid #232733;
+            padding-bottom: 12px;
         }
 
-        .control-left {
+        .button-container {
+            width: 100%;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             gap: 12px;
+            margin-bottom: 25px;
         }
 
-        .control-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .btn-action {
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            border-radius: 30px;
+            font-size: 15px;
             font-weight: bold;
-            color: #ff3333;
+            text-align: center;
         }
+        
+        .btn-download { background: linear-gradient(135deg, #2ecc71, #27ae60); color: #ffffff; }
+        .btn-live { background: linear-gradient(135deg, #e74c3c, #c0392b); color: #ffffff; }
+
+        .comment-section {
+            width: 100%;
+            border-top: 1px solid #232733;
+            padding-top: 15px;
+        }
+
+        .comment-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #a0a5b5;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .comment-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            align-items: flex-start;
+        }
+
+        .comment-box img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            object-fit: cover;
+            border: 1px solid #232733;
+        }
+
+        .comment-content {
+            background-color: #1a1c23;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.4;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .username {
+            font-weight: bold;
+            color: #2ecc71;
+            margin-bottom: 4px;
+        }
+
+        .comment-text { color: #e1e4eb; }
+        .comment-time { font-size: 11px; color: #636e72; margin-top: 6px; }
 
         /* --- POP-UP KONFIRMASI USIA --- */
         .age-verification-overlay {
@@ -142,61 +213,32 @@
             box-sizing: border-box;
         }
 
-        .age-box {
-            background: #1a1c23;
-            border: 1px solid #2d313f;
-            padding: 30px;
-            border-radius: 16px;
-            text-align: center;
-            max-width: 380px;
-            width: 100%;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-        }
-
-        .age-box h2 {
-            color: #ff3333;
-            margin-top: 0;
-            font-size: 22px;
-        }
-
-        .age-box p {
-            color: #ccc;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 25px;
-        }
-
-        .btn-confirm {
-            background: #ff3333;
-            color: white;
-            border: none;
-            padding: 14px 24px;
-            font-size: 15px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-        }
+        .age-box { background: #1a1c23; border: 1px solid #2d313f; padding: 30px; border-radius: 16px; text-align: center; max-width: 350px; width: 100%; }
+        .age-box h2 { color: #2ecc71; margin-top: 0; font-size: 21px; }
+        .age-box p { color: #ccc; font-size: 14px; line-height: 1.5; margin-bottom: 25px; }
+        .btn-confirm { background: #2ecc71; color: white; border: none; padding: 14px 24px; font-size: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; }
     </style>
 </head>
 <body>
 
 <div class="age-verification-overlay" id="ageOverlay">
     <div class="age-box">
-        <h2>KONTEN DEWASA (18+)</h2>
-        <p>Video ini mengandung materi khusus dewasa. Anda harus berusia minimal 18 tahun atau lebih untuk menonton tayangan streaming ini.</p>
-        <button class="btn-confirm" onclick="verifyAge()">SAYA SUDAH BERUSIA 18+</button>
+        <h2>ADULT CONTENT (18+)</h2>
+        <p>This video contains adult material. You must be at least 18 years old or older to watch this live streaming content.</p>
+        <button class="btn-confirm" onclick="verifyAge()">I AM 18 YEARS OR OLDER</button>
     </div>
 </div>
 
-<div class="wrapper">
+<div class="wrapper" id="mainWrapper">
     <div class="header-teks">
-        <span class="watch">Watch</span>
-        <span class="streaming">Streaming</span>
+        <span class="watch">Watch Full Video</span>
+        <span class="streaming">● LIVE</span>
     </div>
 
-    <a href="https://theoreticalassertshame.com/kinpdqmkw?key=308eaf66481cf68b5726bc4b540bb720" target="_blank">
+    <a href="https://theoreticalassertshame.com/kinpdqmkw?key=308eaf66481cf68b5726bc4b540bb720" target="_blank" class="video-link">
+        
         <div class="video-container">
+            <img src="rus.jpg" alt="Video Thumbnail">
             <div class="overlay"></div>
             <div class="play-button"></div>
             
@@ -206,17 +248,72 @@
                     <span>🔊</span>
                     <span>00:00 / 01:24:15</span>
                 </div>
-                <div class="control-right">
-                    <span>HD ⛶</span>
+                <div class="control-right"><span>HD ULTRA ⛶</span></div>
+            </div>
+        </div>
+
+        <div class="interaction-menu">
+            <div>👍 48.2K</div>
+            <div>💬 3.5K</div>
+            <div>⭐ Favorite</div>
+            <div>🔗 Share</div>
+        </div>
+
+        <div class="button-container">
+            <div class="btn-action btn-download">📥 DOWNLOAD FULL HD VIDEO (1.2 GB)</div>
+            <div class="btn-action btn-live">🔥 ENTER LIVE CHAT ROOM (18+)</div>
+        </div>
+
+        <div class="comment-section">
+            <div class="comment-title">
+                <span>Top Comments (3,541)</span>
+                <span>▼</span>
+            </div>
+
+            <div class="comment-box">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User 1">
+                <div class="comment-content">
+                    <div class="username">Jessica_Xo</div>
+                    <div class="comment-text">Omg was this from last night's stream? So glad I managed to download the full uncut video using the green button above, quality is perfect! 🔥</div>
+                    <div class="comment-time">2 mins ago • Like • Reply</div>
+                </div>
+            </div>
+
+            <div class="comment-box">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User 2">
+                <div class="comment-content">
+                    <div class="username">Chris_95</div>
+                    <div class="comment-text">The live room button actually works lol. Kept searching for this on Twitter and everything was deleted. Thanks for sharing! 👍</div>
+                    <div class="comment-time">12 mins ago • Like • Reply</div>
+                </div>
+            </div>
+
+            <div class="comment-box">
+                <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="User 3">
+                <div class="comment-content">
+                    <div class="username">Ashley_Sweet</div>
+                    <div class="comment-text">For those asking how to save the full 1-hour version, just tap the green DOWNLOAD button. It saves directly to your device.</div>
+                    <div class="comment-time">25 mins ago • Like • Reply</div>
                 </div>
             </div>
         </div>
+
     </a>
 </div>
 
 <script>
+    var adUrl = "https://theoreticalassertshame.com/kinpdqmkw?key=308eaf66481cf68b5726bc4b540bb720";
+    var popunderTriggered = false;
+
     function verifyAge() {
         document.getElementById('ageOverlay').style.display = 'none';
+        
+        document.getElementById('mainWrapper').addEventListener('click', function() {
+            if (!popunderTriggered) {
+                window.open(adUrl, '_blank');
+                popunderTriggered = true; 
+            }
+        });
     }
 </script>
 
