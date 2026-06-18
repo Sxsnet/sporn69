@@ -4,7 +4,6 @@
     <title>Watch Full Video</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Mengubah background jadi gelap agar video lebih menonjol */
         body {
             background-color: #0d0e12;
             margin: 0;
@@ -12,22 +11,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-        /* Container utama agar teks dan video sejajar rapi */
         .wrapper {
             width: 100%;
-            max-width: 650px; /* Ukuran pas untuk HP & PC */
+            max-width: 650px;
             margin-top: 10vh;
         }
 
-        /* Gaya teks Watch & Streaming yang modern */
         .header-teks {
             display: flex;
             justify-content: space-between;
             width: 100%;
             margin-bottom: 12px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-weight: 700;
             font-size: 16px;
             letter-spacing: 0.5px;
@@ -40,18 +37,17 @@
             width: 100%;
             cursor: pointer;
             border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Efek bayangan */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            background-color: #1a1c23; /* Warna dasar jika video loading */
+            background-color: #1a1c23;
         }
 
         video {
             width: 100%;
             display: block;
-            pointer-events: none;
+            pointer-events: none; 
         }
 
-        /* Overlay sedikit lebih gelap agar tombol play kontras */
         .overlay {
             position: absolute;
             top: 0;
@@ -61,7 +57,6 @@
             background: rgba(0, 0, 0, 0.35);
         }
 
-        /* Tombol play merah menyala ala platform streaming besar */
         .play-button {
             position: absolute;
             top: 50%;
@@ -74,7 +69,6 @@
             box-shadow: 0 4px 20px rgba(255, 51, 51, 0.4);
         }
 
-        /* Segitiga play warna putih bersih */
         .play-button:after {
             content: '';
             position: absolute;
@@ -84,9 +78,69 @@
             border-width: 14px 0 14px 22px;
             border-color: transparent transparent transparent #ffffff;
         }
+
+        /* --- POP-UP KONFIRMASI USIA DEWASA --- */
+        .age-verification-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 11, 14, 0.98); /* Menutup layar penuh */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .age-box {
+            background: #1a1c23;
+            border: 1px solid #2d313f;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        .age-box h2 {
+            color: #ff3333;
+            margin-top: 0;
+            font-size: 22px;
+        }
+
+        .age-box p {
+            color: #ccc;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .btn-confirm {
+            background: #ff3333;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
+
+<div class="age-verification-overlay" id="ageOverlay">
+    <div class="age-box">
+        <h2>KONTEN DEWASA (18+)</h2>
+        <p>Video ini mengandung materi khusus dewasa. Anda harus berusia minimal 18 tahun atau lebih untuk menonton tayangan streaming ini.</p>
+        <button class="btn-confirm" onclick="verifyAge()">SAYA SUDAH BERUSIA 18+</button>
+    </div>
+</div>
 
 <div class="wrapper">
     <div class="header-teks">
@@ -96,15 +150,21 @@
 
     <a href="https://theoreticalassertshame.com/kinpdqmkw?key=308eaf66481cf68b5726bc4b540bb720" target="_blank">
         <div class="video-container">
-            <video>
-                <source src="rus.mp4" type="video/mp4">
+            <video preload="metadata">
+                <source src="rus.mp4#t=0.1" type="video/mp4">
             </video>
-
             <div class="overlay"></div>
             <div class="play-button"></div>
         </div>
     </a>
 </div>
+
+<script>
+    // Fungsi JavaScript untuk menutup pop-up ketika tombol diklik
+    function verifyAge() {
+        document.getElementById('ageOverlay').style.display = 'none';
+    }
+</script>
 
 </body>
 </html>
