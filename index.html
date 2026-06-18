@@ -16,8 +16,8 @@
 
         .wrapper {
             width: 100%;
-            max-width: 650px;
-            margin-top: 8vh;
+            max-width: 500px;
+            margin-top: 5vh;
         }
 
         .header-teks {
@@ -35,13 +35,11 @@
         .video-container {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* Pas dengan rasio gambar landscape kamu */
+            padding-bottom: 100%; 
             cursor: pointer;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             overflow: hidden;
-            
-            /* TERSAMBUNG KE GAMBAR RUS.JPG KAMU */
             background: url('rus.jpg') center/cover no-repeat;
         }
 
@@ -51,22 +49,24 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.2);
             z-index: 1;
         }
 
-        /* Tombol Play Putih Transparan Bulat Tengah */
+        /* --- TOMBOL PLAY DENGAN ANIMASI BERDENYUT JANTUNG --- */
         .play-button {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
             width: 65px;
             height: 65px;
             background: rgba(255, 255, 255, 0.85);
             border-radius: 50%;
             z-index: 2;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            
+            /* Mengaktifkan animasi berdenyut (nama animasi: denyut, durasi: 1.2 detik, berulang selamanya) */
+            animation: denyut 1.2s infinite ease-in-out;
         }
 
         .play-button:after {
@@ -79,7 +79,22 @@
             border-color: transparent transparent transparent #333333;
         }
 
-        /* Kontrol Durasi Palsu di Bawah Video */
+        /* LOGIKA ANIMASI BERDENYUT (PULSE) */
+        @keyframes denyut {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.08); /* Membesar sedikit di tengah */
+                box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0); /* Efek lingkaran cahaya menyebar */
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
         .fake-controls {
             position: absolute;
             bottom: 0;
@@ -111,7 +126,7 @@
             color: #ff3333;
         }
 
-        /* --- POP-UP KONFIRMASI USIA (18+) --- */
+        /* --- POP-UP KONFIRMASI USIA --- */
         .age-verification-overlay {
             position: fixed;
             top: 0;
